@@ -1,0 +1,22 @@
+server {
+    listen 80;
+    server_name tu_dominio.com;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+
+    # Servir archivos estáticos (CSS, JS)
+    location /static/ {
+        root /home/ubuntu/app-service/Web-django-test/staticfiles;
+    }
+
+    # Servir archivos media (Imágenes subidas)
+    location /media/ {
+        root /home/ubuntu/app-service/Web-django-test/media;
+    }
+
+    # Pasar todo lo demás a Gunicorn
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn.sock;
+    }
+}
