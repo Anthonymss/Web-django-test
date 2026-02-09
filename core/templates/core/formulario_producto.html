@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="page-title">{{ titulo }}</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+            <small style="color: #666;">{{ field.help_text }}</small>
+            {% endif %}
+            {% for error in field.errors %}
+            <div style="color: #e74c3c; font-size: 0.9rem; margin-top: 0.25rem;">{{ error }}</div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+        <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">Guardar</button>
+            <a href="{% url 'lista_productos' %}" class="btn btn-secondary" style="flex: 1; text-align: center;">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

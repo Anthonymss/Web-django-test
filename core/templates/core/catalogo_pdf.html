@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 12px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        .price {
+            text-align: right;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 10px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>Catálogo de Productos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <td>
+                    {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" style="width: 50px; height: 50px;">
+                    {% else %}
+                    <span style="color: #999;">-</span>
+                    {% endif %}
+                </td>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.categoria }}</td>
+                <td>{{ producto.descripcion|truncatewords:10 }}</td>
+                <td class="price">${{ producto.precio }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="footer">
+        Generado automáticamente - Mi Tienda
+    </div>
+</body>
+</html>
